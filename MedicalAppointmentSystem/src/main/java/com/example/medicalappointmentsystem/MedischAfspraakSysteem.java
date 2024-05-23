@@ -1,23 +1,28 @@
 package com.example.medicalappointmentsystem;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MedischAfspraakSysteem extends Application {
     private UserService userService = new UserService();
     private AfspraakService afspraakService = new AfspraakService();
+    private Stage primaryStage;
+
+    private TableView<Afspraak> afspraakTableView;
 
     @Override
     public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        new LoginScherm(userService, primaryStage, this).show();
+    }
+
+    public void showMainApp() {
         BorderPane root = new BorderPane();
 
         VBox sidebar = new VBox();
@@ -33,8 +38,8 @@ public class MedischAfspraakSysteem extends Application {
 
         sidebar.getChildren().addAll(btnAfspraak, btnPatienten, btnAgenda, btnDashboard);
 
-        // Create the main content areas
         VBox contentAfspraak = createAfspraakContent();
+        VBox contentPatienten = createPatientenContent();
         VBox contentAgenda = createAgendaContent();
         VBox contentDashboard = createDashboardContent();
 
@@ -42,6 +47,7 @@ public class MedischAfspraakSysteem extends Application {
         root.setCenter(contentAfspraak);
 
         btnAfspraak.setOnAction(e -> root.setCenter(contentAfspraak));
+        btnPatienten.setOnAction(e -> root.setCenter(contentPatienten));
         btnAgenda.setOnAction(e -> root.setCenter(contentAgenda));
         btnDashboard.setOnAction(e -> root.setCenter(contentDashboard));
 
@@ -49,7 +55,6 @@ public class MedischAfspraakSysteem extends Application {
         primaryStage.setTitle("Medisch Afspraak Systeem");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 
     private VBox createAfspraakContent() {
@@ -61,8 +66,11 @@ public class MedischAfspraakSysteem extends Application {
         ComboBox<String> cbBehandelingssoort = new ComboBox<>();
         cbBehandelingssoort.getItems().addAll("Consultatie", "Follow-up", "Routinecontrole");
 
-        Label lblPatientnaam = new Label("Patiëntnaam:");
-        TextField tfPatientnaam = new TextField();
+        Label lblVoornaam = new Label("Patiënt Voornaam:");
+        TextField tfVoornaam = new TextField();
+
+        Label lblAchternaam = new Label("Patiënt Achternaam:");
+        TextField tfAchternaam = new TextField();
 
         Label lblAfspraakdatum = new Label("Afspraakdatum:");
         DatePicker dpAfspraakdatum = new DatePicker();
@@ -82,16 +90,25 @@ public class MedischAfspraakSysteem extends Application {
         Button btnSubmit = new Button("Opslaan");
         btnSubmit.setOnAction(e -> {
             String behandelingssoort = cbBehandelingssoort.getValue();
-            String patientnaam = tfPatientnaam.getText();
+            String voornaam = tfVoornaam.getText();
+            String achternaam = tfAchternaam.getText();
             String afspraakdatum = dpAfspraakdatum.getValue().toString();
             String afspraaktijd = cbAfspraaktijd.getValue();
             String artsnaam = cbArtsnaam.getValue();
             String notitie = taNotitie.getText();
 
-            Afspraak afspraak = new Afspraak(behandelingssoort, patientnaam, afspraakdatum, afspraaktijd, artsnaam, notitie);
+            Afspraak afspraak = new Afspraak(behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie);
+
+            if (afspraakService.saveAfspraak(afspraak)) {
+                showAlert(Alert.AlertType.INFORMATION, "Afspraak succesvol opgeslagen!");
+                clearAfspraakFields(cbBehandelingssoort, tfVoornaam, tfAchternaam, dpAfspraakdatum, cbAfspraaktijd, cbArtsnaam, taNotitie);
+                updateAgenda();
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Opslaan van afspraak mislukt!");
+            }
         });
 
-        content.getChildren().addAll(lblBehandelingssoort, cbBehandelingssoort, lblPatientnaam, tfPatientnaam, lblAfspraakdatum, dpAfspraakdatum, lblAfspraaktijd, cbAfspraaktijd, lblArtsnaam, cbArtsnaam, lblNotitie, taNotitie, btnSubmit);
+        content.getChildren().addAll(lblBehandelingssoort, cbBehandelingssoort, lblVoornaam, tfVoornaam, lblAchternaam, tfAchternaam, lblAfspraakdatum, dpAfspraakdatum, lblAfspraaktijd, cbAfspraaktijd, lblArtsnaam, cbArtsnaam, lblNotitie, taNotitie, btnSubmit);
         return content;
     }
 
@@ -100,13 +117,17 @@ public class MedischAfspraakSysteem extends Application {
         content.setPadding(new Insets(20));
         content.setSpacing(10);
 
-        TableView<Afspraak> tabel = new TableView<>();
+        afspraakTableView = new TableView<>();
+        afspraakTableView.setItems(afspraakService.getAllAfspraken());
 
         TableColumn<Afspraak, String> colBehandelingssoort = new TableColumn<>("Behandelingssoort");
         colBehandelingssoort.setCellValueFactory(new PropertyValueFactory<>("behandelingssoort"));
 
-        TableColumn<Afspraak, String> colPatientnaam = new TableColumn<>("Patiëntnaam");
-        colPatientnaam.setCellValueFactory(new PropertyValueFactory<>("patientnaam"));
+        TableColumn<Afspraak, String> colVoornaam = new TableColumn<>("Patiënt Voornaam");
+        colVoornaam.setCellValueFactory(new PropertyValueFactory<>("voornaam"));
+
+        TableColumn<Afspraak, String> colAchternaam = new TableColumn<>("Patiënt Achternaam");
+        colAchternaam.setCellValueFactory(new PropertyValueFactory<>("achternaam"));
 
         TableColumn<Afspraak, String> colAfspraakdatum = new TableColumn<>("Afspraakdatum");
         colAfspraakdatum.setCellValueFactory(new PropertyValueFactory<>("afspraakdatum"));
@@ -120,7 +141,54 @@ public class MedischAfspraakSysteem extends Application {
         TableColumn<Afspraak, String> colNotitie = new TableColumn<>("Notitie");
         colNotitie.setCellValueFactory(new PropertyValueFactory<>("notitie"));
 
-        tabel.getColumns().addAll(colBehandelingssoort, colPatientnaam, colAfspraakdatum, colAfspraaktijd, colArtsnaam, colNotitie);
+        afspraakTableView.getColumns().addAll(colBehandelingssoort, colVoornaam, colAchternaam, colAfspraakdatum, colAfspraaktijd, colArtsnaam, colNotitie);
+
+        // Add CRUD buttons
+        Button btnUpdate = new Button("Update");
+        Button btnDelete = new Button("Delete");
+
+        btnUpdate.setOnAction(e -> {
+            Afspraak selectedAfspraak = afspraakTableView.getSelectionModel().getSelectedItem();
+            if (selectedAfspraak != null) {
+                new UpdateAfspraakScherm(afspraakService, selectedAfspraak, this).show();
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Selecteer een afspraak om te updaten.");
+            }
+        });
+
+        btnDelete.setOnAction(e -> {
+            Afspraak selectedAfspraak = afspraakTableView.getSelectionModel().getSelectedItem();
+            if (selectedAfspraak != null) {
+                if (afspraakService.deleteAfspraak(selectedAfspraak)) {
+                    showAlert(Alert.AlertType.INFORMATION, "Afspraak succesvol verwijderd!");
+                    updateAgenda();
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Verwijderen van afspraak mislukt!");
+                }
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Selecteer een afspraak om te verwijderen.");
+            }
+        });
+
+        content.getChildren().addAll(afspraakTableView, btnUpdate, btnDelete);
+        return content;
+    }
+
+    private VBox createPatientenContent() {
+        VBox content = new VBox();
+        content.setPadding(new Insets(20));
+        content.setSpacing(10);
+
+        TableView<Patient> tabel = new TableView<>();
+        tabel.setItems(afspraakService.getAllPatienten());
+
+        TableColumn<Patient, String> colVoornaam = new TableColumn<>("Voornaam");
+        colVoornaam.setCellValueFactory(new PropertyValueFactory<>("voornaam"));
+
+        TableColumn<Patient, String> colAchternaam = new TableColumn<>("Achternaam");
+        colAchternaam.setCellValueFactory(new PropertyValueFactory<>("achternaam"));
+
+        tabel.getColumns().addAll(colVoornaam, colAchternaam);
 
         content.getChildren().add(tabel);
         return content;
@@ -131,22 +199,44 @@ public class MedischAfspraakSysteem extends Application {
         content.setPadding(new Insets(20));
         content.setSpacing(10);
 
-        Label lblTitle = new Label("Dashboard");
-        lblTitle.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+        int aantalArtsen = userService.countUsersByRole("Arts");
+        int aantalReceptionisten = userService.countUsersByRole("Receptionist");
+        int aantalZusters = userService.countUsersByRole("Zuster");
 
-        Label lblArtsen = new Label("Aantal Artsen: " + userService.countUsersByRole("Arts"));
-        Label lblReceptionisten = new Label("Aantal Receptionisten: " + userService.countUsersByRole("Receptionist"));
-        Label lblZusters = new Label("Aantal Zusters: " + userService.countUsersByRole("Zuster"));
+        Label lblArtsen = new Label("Aantal artsen: " + aantalArtsen);
+        Label lblReceptionisten = new Label("Aantal receptionisten: " + aantalReceptionisten);
+        Label lblZusters = new Label("Aantal zusters: " + aantalZusters);
 
-        content.getChildren().addAll(lblTitle, lblArtsen, lblReceptionisten, lblZusters);
+        content.getChildren().addAll(lblArtsen, lblReceptionisten, lblZusters);
         return content;
     }
 
+    private void clearAfspraakFields(ComboBox<String> cbBehandelingssoort, TextField tfVoornaam, TextField tfAchternaam, DatePicker dpAfspraakdatum, ComboBox<String> cbAfspraaktijd, ComboBox<String> cbArtsnaam, TextArea taNotitie) {
+        cbBehandelingssoort.setValue(null);
+        tfVoornaam.clear();
+        tfAchternaam.clear();
+        dpAfspraakdatum.setValue(null);
+        cbAfspraaktijd.setValue(null);
+        cbArtsnaam.setValue(null);
+        taNotitie.clear();
+    }
+
+    public void showAlert(Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public void updateAgenda() {
+        afspraakTableView.setItems(afspraakService.getAllAfspraken());
+    }
 
     public static void main(String[] args) {
         launch(args);
     }
 }
+
+
 
 
 

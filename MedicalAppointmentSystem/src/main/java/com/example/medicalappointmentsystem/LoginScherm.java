@@ -8,25 +8,24 @@ import javafx.stage.Stage;
 
 public class LoginScherm {
     private UserService userService;
-    private Stage primaryStage;
+    private Stage stage;
+    private MedischAfspraakSysteem app;
 
-    public LoginScherm(UserService userService, Stage primaryStage) {
+    public LoginScherm(UserService userService, Stage stage, MedischAfspraakSysteem app) {
         this.userService = userService;
-        this.primaryStage = primaryStage;
+        this.stage = stage;
+        this.app = app;
     }
 
     public void show() {
-        Stage loginStage = new Stage();
-        loginStage.setTitle("Login");
+        VBox root = new VBox();
+        root.setPadding(new Insets(20));
+        root.setSpacing(10);
 
-        VBox content = new VBox();
-        content.setPadding(new Insets(20));
-        content.setSpacing(10);
-
-        Label lblUsername = new Label("Voornaam:");
+        Label lblUsername = new Label("Username:");
         TextField tfUsername = new TextField();
 
-        Label lblPassword = new Label("Wachtwoord:");
+        Label lblPassword = new Label("Password:");
         PasswordField pfPassword = new PasswordField();
 
         Button btnLogin = new Button("Login");
@@ -34,24 +33,22 @@ public class LoginScherm {
             String username = tfUsername.getText();
             String password = pfPassword.getText();
 
-            if (userService.loginUser(username, password)) {
-                showAlert(Alert.AlertType.INFORMATION, "Login succesvol!");
-                loginStage.close();
+            if (userService.validateLogin(username, password)) {
+                app.showMainApp();
             } else {
                 showAlert(Alert.AlertType.ERROR, "Login mislukt!");
             }
         });
 
-        Button btnShowRegister = new Button("Registreren");
-        btnShowRegister.setOnAction(e -> {
-            loginStage.hide();
-            new RegistratieScherm(userService, primaryStage, loginStage).show();
-        });
+        Button btnRegister = new Button("Register");
+        btnRegister.setOnAction(e -> new RegistratieScherm(userService, stage, app).show());
 
-        content.getChildren().addAll(lblUsername, tfUsername, lblPassword, pfPassword, btnLogin, btnShowRegister);
-        Scene scene = new Scene(content, 300, 400);
-        loginStage.setScene(scene);
-        loginStage.show();
+        root.getChildren().addAll(lblUsername, tfUsername, lblPassword, pfPassword, btnLogin, btnRegister);
+
+        Scene scene = new Scene(root, 300, 200);
+        stage.setTitle("Login");
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void showAlert(Alert.AlertType alertType, String message) {
@@ -60,4 +57,6 @@ public class LoginScherm {
         alert.showAndWait();
     }
 }
+
+
 

@@ -8,22 +8,19 @@ import javafx.stage.Stage;
 
 public class RegistratieScherm {
     private UserService userService;
-    private Stage primaryStage;
-    private Stage loginStage;
+    private Stage stage;
+    private MedischAfspraakSysteem app;
 
-    public RegistratieScherm(UserService userService, Stage primaryStage, Stage loginStage) {
+    public RegistratieScherm(UserService userService, Stage stage, MedischAfspraakSysteem app) {
         this.userService = userService;
-        this.primaryStage = primaryStage;
-        this.loginStage = loginStage;
+        this.stage = stage;
+        this.app = app;
     }
 
     public void show() {
-        Stage registerStage = new Stage();
-        registerStage.setTitle("Registreren");
-
-        VBox content = new VBox();
-        content.setPadding(new Insets(20));
-        content.setSpacing(10);
+        VBox root = new VBox();
+        root.setPadding(new Insets(20));
+        root.setSpacing(10);
 
         Label lblVoornaam = new Label("Voornaam:");
         TextField tfVoornaam = new TextField();
@@ -31,39 +28,41 @@ public class RegistratieScherm {
         Label lblAchternaam = new Label("Achternaam:");
         TextField tfAchternaam = new TextField();
 
-        Label lblPassword = new Label("Wachtwoord:");
+        Label lblUsername = new Label("Username:");
+        TextField tfUsername = new TextField();
+
+        Label lblPassword = new Label("Password:");
         PasswordField pfPassword = new PasswordField();
 
-        Label lblRole = new Label("Rol:");
+        Label lblRole = new Label("Role:");
         ComboBox<String> cbRole = new ComboBox<>();
         cbRole.getItems().addAll("Arts", "Receptionist", "Zuster");
 
-        Button btnRegister = new Button("Registreren");
+        Button btnRegister = new Button("Register");
         btnRegister.setOnAction(e -> {
             String voornaam = tfVoornaam.getText();
             String achternaam = tfAchternaam.getText();
+            String username = tfUsername.getText();
             String password = pfPassword.getText();
             String role = cbRole.getValue();
 
-            if (userService.registerUser(voornaam, achternaam, password, role)) {
+            if (userService.registerUser(voornaam, achternaam, username, password, role)) {
                 showAlert(Alert.AlertType.INFORMATION, "Registratie succesvol!");
-                registerStage.close();
-                loginStage.show();
+                new LoginScherm(userService, stage, app).show();
             } else {
                 showAlert(Alert.AlertType.ERROR, "Registratie mislukt!");
             }
         });
 
-        Button btnBackToLogin = new Button("Terug naar Login");
-        btnBackToLogin.setOnAction(e -> {
-            registerStage.close();
-            loginStage.show();
-        });
+        Button btnBack = new Button("Back to Login");
+        btnBack.setOnAction(e -> new LoginScherm(userService, stage, app).show());
 
-        content.getChildren().addAll(lblVoornaam, tfVoornaam, lblAchternaam, tfAchternaam, lblPassword, pfPassword, lblRole, cbRole, btnRegister, btnBackToLogin);
-        Scene scene = new Scene(content, 300, 400);
-        registerStage.setScene(scene);
-        registerStage.show();
+        root.getChildren().addAll(lblVoornaam, tfVoornaam, lblAchternaam, tfAchternaam, lblUsername, tfUsername, lblPassword, pfPassword, lblRole, cbRole, btnRegister, btnBack);
+
+        Scene scene = new Scene(root, 300, 400);
+        stage.setTitle("Register");
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void showAlert(Alert.AlertType alertType, String message) {
@@ -72,4 +71,6 @@ public class RegistratieScherm {
         alert.showAndWait();
     }
 }
+
+
 
