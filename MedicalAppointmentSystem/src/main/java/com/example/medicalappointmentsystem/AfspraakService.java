@@ -4,16 +4,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.util.logging.Logger;
 
 public class AfspraakService {
+    private static final Logger logger = Logger.getLogger(AfspraakService.class.getName());
     private DatabaseConnector databaseConnector = new DatabaseConnector();
 
     public boolean saveAfspraak(Afspraak afspraak) {
         String query = "INSERT INTO afspraken (behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
         try (Connection conn = databaseConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
-
             pstmt.setString(1, afspraak.getBehandelingssoort());
             pstmt.setString(2, afspraak.getVoornaam());
             pstmt.setString(3, afspraak.getAchternaam());
@@ -23,9 +23,10 @@ public class AfspraakService {
             pstmt.setString(7, afspraak.getNotitie());
 
             pstmt.executeUpdate();
+            logger.info("Afspraak succesvol opgeslagen: " + afspraak);
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.severe("Fout bij het opslaan van afspraak: " + e.getMessage());
             return false;
         }
     }

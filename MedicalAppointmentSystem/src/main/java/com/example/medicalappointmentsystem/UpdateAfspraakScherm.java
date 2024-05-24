@@ -46,7 +46,7 @@ public class UpdateAfspraakScherm {
 
         Label lblArtsnaam = new Label("Artsnaam:");
         ComboBox<String> cbArtsnaam = new ComboBox<>();
-        cbArtsnaam.getItems().addAll("Dr. Jansen", "Dr. de Vries", "Dr. Bakker");
+        app.loadArtsNames(cbArtsnaam);
         cbArtsnaam.setValue(afspraak.getArtsnaam());
 
         Label lblNotitie = new Label("Notitie:");
@@ -80,7 +80,4 @@ public class UpdateAfspraakScherm {
         stage.setScene(scene);
         stage.show();
     }
-
-
 }
-

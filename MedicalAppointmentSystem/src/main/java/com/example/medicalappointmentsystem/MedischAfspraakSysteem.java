@@ -1,6 +1,8 @@
 package com.example.medicalappointmentsystem;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -81,7 +83,7 @@ public class MedischAfspraakSysteem extends Application {
 
         Label lblArtsnaam = new Label("Artsnaam:");
         ComboBox<String> cbArtsnaam = new ComboBox<>();
-        cbArtsnaam.getItems().addAll("Dr. Jansen", "Dr. de Vries", "Dr. Bakker");
+        loadArtsNames(cbArtsnaam);
 
         Label lblNotitie = new Label("Notitie:");
         TextArea taNotitie = new TextArea();
@@ -110,6 +112,11 @@ public class MedischAfspraakSysteem extends Application {
 
         content.getChildren().addAll(lblBehandelingssoort, cbBehandelingssoort, lblVoornaam, tfVoornaam, lblAchternaam, tfAchternaam, lblAfspraakdatum, dpAfspraakdatum, lblAfspraaktijd, cbAfspraaktijd, lblArtsnaam, cbArtsnaam, lblNotitie, taNotitie, btnSubmit);
         return content;
+    }
+
+    public void loadArtsNames(ComboBox<String> cbArtsnaam) {
+        ObservableList<String> artsNames = FXCollections.observableArrayList(userService.getAllArtsNames());
+        cbArtsnaam.setItems(artsNames);
     }
 
     private VBox createAgendaContent() {
@@ -235,11 +242,3 @@ public class MedischAfspraakSysteem extends Application {
         launch(args);
     }
 }
-
-
-
-
-
-
-
-
