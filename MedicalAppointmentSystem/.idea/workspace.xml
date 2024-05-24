@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9442acc-6927-45b1-877c-f3e045d09bf9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/Patient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/UpdateAfspraakScherm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/Afspraak.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/Afspraak.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/AfspraakService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/AfspraakService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/LoginScherm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/LoginScherm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/MedischAfspraakSysteem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/MedischAfspraakSysteem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/RegistratieScherm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/RegistratieScherm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/DatabaseConnector.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +86,7 @@
       <workItem from="1716409995614" duration="1335000" />
       <workItem from="1716451496149" duration="4675000" />
       <workItem from="1716482309624" duration="3045000" />
+      <workItem from="1716551012326" duration="328000" />
     </task>
     <servers />
   </component>
