@@ -6,6 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
+
 public class UpdateAfspraakScherm {
     private AfspraakService afspraakService;
     private Afspraak afspraak;
@@ -35,9 +37,14 @@ public class UpdateAfspraakScherm {
         Label lblAchternaam = new Label("Patiënt Achternaam:");
         TextField tfAchternaam = new TextField(afspraak.getAchternaam());
 
+        Label lblEmail = new Label("Patiënt Email:");
+        TextField tfEmail = new TextField(afspraak.getEmail());
+
+        Label lblGeboortedatum = new Label("Patiënt Geboortedatum:");
+        DatePicker dpGeboortedatum = new DatePicker(afspraak.getGeboortedatum());
+
         Label lblAfspraakdatum = new Label("Afspraakdatum:");
-        DatePicker dpAfspraakdatum = new DatePicker();
-        dpAfspraakdatum.setValue(java.time.LocalDate.parse(afspraak.getAfspraakdatum()));
+        DatePicker dpAfspraakdatum = new DatePicker(afspraak.getAfspraakdatum());
 
         Label lblAfspraaktijd = new Label("Afspraaktijd:");
         ComboBox<String> cbAfspraaktijd = new ComboBox<>();
@@ -58,12 +65,14 @@ public class UpdateAfspraakScherm {
             String behandelingssoort = cbBehandelingssoort.getValue();
             String voornaam = tfVoornaam.getText();
             String achternaam = tfAchternaam.getText();
-            String afspraakdatum = dpAfspraakdatum.getValue().toString();
+            String email = tfEmail.getText();
+            LocalDate geboortedatum = dpGeboortedatum.getValue();
+            LocalDate afspraakdatum = dpAfspraakdatum.getValue();
             String afspraaktijd = cbAfspraaktijd.getValue();
             String artsnaam = cbArtsnaam.getValue();
             String notitie = taNotitie.getText();
 
-            Afspraak updatedAfspraak = new Afspraak(behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie);
+            Afspraak updatedAfspraak = new Afspraak(behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie, email, geboortedatum);
             if (afspraakService.updateAfspraak(afspraak, updatedAfspraak)) {
                 app.updateAgenda();
                 stage.close();
@@ -73,7 +82,7 @@ public class UpdateAfspraakScherm {
             }
         });
 
-        root.getChildren().addAll(lblBehandelingssoort, cbBehandelingssoort, lblVoornaam, tfVoornaam, lblAchternaam, tfAchternaam, lblAfspraakdatum, dpAfspraakdatum, lblAfspraaktijd, cbAfspraaktijd, lblArtsnaam, cbArtsnaam, lblNotitie, taNotitie, btnSubmit);
+        root.getChildren().addAll(lblBehandelingssoort, cbBehandelingssoort, lblVoornaam, tfVoornaam, lblAchternaam, tfAchternaam, lblEmail, tfEmail, lblGeboortedatum, dpGeboortedatum, lblAfspraakdatum, dpAfspraakdatum, lblAfspraaktijd, cbAfspraaktijd, lblArtsnaam, cbArtsnaam, lblNotitie, taNotitie, btnSubmit);
 
         Scene scene = new Scene(root, 400, 600);
         stage.setTitle("Update Afspraak");

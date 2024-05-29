@@ -11,6 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
+
 public class MedischAfspraakSysteem extends Application {
     private UserService userService = new UserService();
     private AfspraakService afspraakService = new AfspraakService();
@@ -53,7 +55,7 @@ public class MedischAfspraakSysteem extends Application {
         btnAgenda.setOnAction(e -> root.setCenter(contentAgenda));
         btnDashboard.setOnAction(e -> root.setCenter(contentDashboard));
 
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, 1200, 800);
         primaryStage.setTitle("Medisch Afspraak Systeem");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -73,6 +75,12 @@ public class MedischAfspraakSysteem extends Application {
 
         Label lblAchternaam = new Label("Patiënt Achternaam:");
         TextField tfAchternaam = new TextField();
+
+        Label lblEmail = new Label("Patiënt Email:");
+        TextField tfEmail = new TextField();
+
+        Label lblGeboortedatum = new Label("Patiënt Geboortedatum:");
+        DatePicker dpGeboortedatum = new DatePicker();
 
         Label lblAfspraakdatum = new Label("Afspraakdatum:");
         DatePicker dpAfspraakdatum = new DatePicker();
@@ -94,23 +102,25 @@ public class MedischAfspraakSysteem extends Application {
             String behandelingssoort = cbBehandelingssoort.getValue();
             String voornaam = tfVoornaam.getText();
             String achternaam = tfAchternaam.getText();
-            String afspraakdatum = dpAfspraakdatum.getValue().toString();
+            String email = tfEmail.getText();
+            LocalDate geboortedatum = dpGeboortedatum.getValue();
+            LocalDate afspraakdatum = dpAfspraakdatum.getValue();
             String afspraaktijd = cbAfspraaktijd.getValue();
             String artsnaam = cbArtsnaam.getValue();
             String notitie = taNotitie.getText();
 
-            Afspraak afspraak = new Afspraak(behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie);
+            Afspraak afspraak = new Afspraak(behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie, email, geboortedatum);
 
             if (afspraakService.saveAfspraak(afspraak)) {
                 showAlert(Alert.AlertType.INFORMATION, "Afspraak succesvol opgeslagen!");
-                clearAfspraakFields(cbBehandelingssoort, tfVoornaam, tfAchternaam, dpAfspraakdatum, cbAfspraaktijd, cbArtsnaam, taNotitie);
+                clearAfspraakFields(cbBehandelingssoort, tfVoornaam, tfAchternaam, tfEmail, dpGeboortedatum, dpAfspraakdatum, cbAfspraaktijd, cbArtsnaam, taNotitie);
                 updateAgenda();
             } else {
                 showAlert(Alert.AlertType.ERROR, "Opslaan van afspraak mislukt!");
             }
         });
 
-        content.getChildren().addAll(lblBehandelingssoort, cbBehandelingssoort, lblVoornaam, tfVoornaam, lblAchternaam, tfAchternaam, lblAfspraakdatum, dpAfspraakdatum, lblAfspraaktijd, cbAfspraaktijd, lblArtsnaam, cbArtsnaam, lblNotitie, taNotitie, btnSubmit);
+        content.getChildren().addAll(lblBehandelingssoort, cbBehandelingssoort, lblVoornaam, tfVoornaam, lblAchternaam, tfAchternaam, lblEmail, tfEmail, lblGeboortedatum, dpGeboortedatum, lblAfspraakdatum, dpAfspraakdatum, lblAfspraaktijd, cbAfspraaktijd, lblArtsnaam, cbArtsnaam, lblNotitie, taNotitie, btnSubmit);
         return content;
     }
 
@@ -136,7 +146,7 @@ public class MedischAfspraakSysteem extends Application {
         TableColumn<Afspraak, String> colAchternaam = new TableColumn<>("Patiënt Achternaam");
         colAchternaam.setCellValueFactory(new PropertyValueFactory<>("achternaam"));
 
-        TableColumn<Afspraak, String> colAfspraakdatum = new TableColumn<>("Afspraakdatum");
+        TableColumn<Afspraak, LocalDate> colAfspraakdatum = new TableColumn<>("Afspraakdatum");
         colAfspraakdatum.setCellValueFactory(new PropertyValueFactory<>("afspraakdatum"));
 
         TableColumn<Afspraak, String> colAfspraaktijd = new TableColumn<>("Afspraaktijd");
@@ -148,11 +158,18 @@ public class MedischAfspraakSysteem extends Application {
         TableColumn<Afspraak, String> colNotitie = new TableColumn<>("Notitie");
         colNotitie.setCellValueFactory(new PropertyValueFactory<>("notitie"));
 
-        afspraakTableView.getColumns().addAll(colBehandelingssoort, colVoornaam, colAchternaam, colAfspraakdatum, colAfspraaktijd, colArtsnaam, colNotitie);
+        TableColumn<Afspraak, String> colEmail = new TableColumn<>("Email");
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        TableColumn<Afspraak, LocalDate> colGeboortedatum = new TableColumn<>("Geboortedatum");
+        colGeboortedatum.setCellValueFactory(new PropertyValueFactory<>("geboortedatum"));
+
+        afspraakTableView.getColumns().addAll(colBehandelingssoort, colVoornaam, colAchternaam, colAfspraakdatum, colAfspraaktijd, colArtsnaam, colNotitie, colEmail, colGeboortedatum);
 
         // Add CRUD buttons
         Button btnUpdate = new Button("Update");
         Button btnDelete = new Button("Delete");
+
 
         btnUpdate.setOnAction(e -> {
             Afspraak selectedAfspraak = afspraakTableView.getSelectionModel().getSelectedItem();
@@ -195,7 +212,13 @@ public class MedischAfspraakSysteem extends Application {
         TableColumn<Patient, String> colAchternaam = new TableColumn<>("Achternaam");
         colAchternaam.setCellValueFactory(new PropertyValueFactory<>("achternaam"));
 
-        tabel.getColumns().addAll(colVoornaam, colAchternaam);
+        TableColumn<Patient, String> colEmail = new TableColumn<>("Email");
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        TableColumn<Patient, LocalDate> colGeboortedatum = new TableColumn<>("Geboortedatum");
+        colGeboortedatum.setCellValueFactory(new PropertyValueFactory<>("geboortedatum"));
+
+        tabel.getColumns().addAll(colVoornaam, colAchternaam, colEmail, colGeboortedatum);
 
         content.getChildren().add(tabel);
         return content;
@@ -218,10 +241,12 @@ public class MedischAfspraakSysteem extends Application {
         return content;
     }
 
-    private void clearAfspraakFields(ComboBox<String> cbBehandelingssoort, TextField tfVoornaam, TextField tfAchternaam, DatePicker dpAfspraakdatum, ComboBox<String> cbAfspraaktijd, ComboBox<String> cbArtsnaam, TextArea taNotitie) {
+    private void clearAfspraakFields(ComboBox<String> cbBehandelingssoort, TextField tfVoornaam, TextField tfAchternaam, TextField tfEmail, DatePicker dpGeboortedatum, DatePicker dpAfspraakdatum, ComboBox<String> cbAfspraaktijd, ComboBox<String> cbArtsnaam, TextArea taNotitie) {
         cbBehandelingssoort.setValue(null);
         tfVoornaam.clear();
         tfAchternaam.clear();
+        tfEmail.clear();
+        dpGeboortedatum.setValue(null);
         dpAfspraakdatum.setValue(null);
         cbAfspraaktijd.setValue(null);
         cbArtsnaam.setValue(null);
