@@ -3,6 +3,7 @@ package com.example.medicalappointmentsystem;
 import java.time.LocalDate;
 
 public class Afspraak {
+    private int id;
     private String behandelingssoort;
     private String voornaam;
     private String achternaam;
@@ -13,7 +14,8 @@ public class Afspraak {
     private String email;
     private LocalDate geboortedatum;
 
-    public Afspraak(String behandelingssoort, String voornaam, String achternaam, LocalDate afspraakdatum, String afspraaktijd, String artsnaam, String notitie, String email, LocalDate geboortedatum) {
+    public Afspraak(int id, String behandelingssoort, String voornaam, String achternaam, LocalDate afspraakdatum, String afspraaktijd, String artsnaam, String notitie, String email, LocalDate geboortedatum) {
+        this.id = id;
         this.behandelingssoort = behandelingssoort;
         this.voornaam = voornaam;
         this.achternaam = achternaam;
@@ -26,6 +28,14 @@ public class Afspraak {
     }
 
     // Getters en Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getBehandelingssoort() {
         return behandelingssoort;
     }

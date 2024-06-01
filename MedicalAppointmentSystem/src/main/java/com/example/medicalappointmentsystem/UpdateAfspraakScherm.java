@@ -62,6 +62,7 @@ public class UpdateAfspraakScherm {
 
         Button btnSubmit = new Button("Update");
         btnSubmit.setOnAction(e -> {
+            int id = afspraak.getId();
             String behandelingssoort = cbBehandelingssoort.getValue();
             String voornaam = tfVoornaam.getText();
             String achternaam = tfAchternaam.getText();
@@ -72,7 +73,7 @@ public class UpdateAfspraakScherm {
             String artsnaam = cbArtsnaam.getValue();
             String notitie = taNotitie.getText();
 
-            Afspraak updatedAfspraak = new Afspraak(behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie, email, geboortedatum);
+            Afspraak updatedAfspraak = new Afspraak(id,behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie, email, geboortedatum);
             if (afspraakService.updateAfspraak(afspraak, updatedAfspraak)) {
                 app.updateAgenda();
                 stage.close();

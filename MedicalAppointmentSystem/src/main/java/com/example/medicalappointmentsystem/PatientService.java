@@ -99,6 +99,42 @@ public class PatientService {
         }
     }
 
+    public boolean addBehandeling(int patientId, String behandelingNotitie) {
+        String query = "INSERT INTO behandelingen (afspraak_id, behandeling_notitie) VALUES (?, ?)";
+
+        try (Connection conn = databaseConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, patientId);
+            pstmt.setString(2, behandelingNotitie);
+
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean hasBehandeling(int patientId) {
+        String query = "SELECT COUNT(*) FROM behandelingen WHERE afspraak_id = ?";
+
+        try (Connection conn = databaseConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, patientId);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
     public boolean saveOrUpdatePatient(String voornaam, String achternaam, String email, LocalDate geboortedatum) {
         return afspraakService.saveOrUpdatePatient(voornaam, achternaam, email, geboortedatum);
     }

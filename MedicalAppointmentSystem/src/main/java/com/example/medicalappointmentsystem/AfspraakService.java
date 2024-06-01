@@ -143,6 +143,7 @@ public class AfspraakService {
              ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
+                int id = rs.getInt("id");
                 String behandelingssoort = rs.getString("behandelingssoort");
                 String voornaam = rs.getString("voornaam");
                 String achternaam = rs.getString("achternaam");
@@ -153,7 +154,7 @@ public class AfspraakService {
                 String email = rs.getString("email");
                 LocalDate geboortedatum = rs.getDate("geboortedatum") != null ? rs.getDate("geboortedatum").toLocalDate() : null;
 
-                Afspraak afspraak = new Afspraak(behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie, email, geboortedatum);
+                Afspraak afspraak = new Afspraak(id, behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie, email, geboortedatum);
                 afspraken.add(afspraak);
             }
         } catch (SQLException e) {
@@ -162,5 +163,4 @@ public class AfspraakService {
 
         return afspraken;
     }
-
 }

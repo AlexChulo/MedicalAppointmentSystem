@@ -1,11 +1,13 @@
 package com.example.medicalappointmentsystem;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -104,6 +106,7 @@ public class MedischAfspraakSysteem extends Application {
 
         Button btnSubmit = new Button("Opslaan");
         btnSubmit.setOnAction(e -> {
+            int id = 0;
             String behandelingssoort = cbBehandelingssoort.getValue();
             String voornaam = tfVoornaam.getText();
             String achternaam = tfAchternaam.getText();
@@ -114,7 +117,7 @@ public class MedischAfspraakSysteem extends Application {
             String artsnaam = cbArtsnaam.getValue();
             String notitie = taNotitie.getText();
 
-            Afspraak afspraak = new Afspraak(behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie, email, geboortedatum);
+            Afspraak afspraak = new Afspraak(id,behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie, email, geboortedatum);
 
             if (afspraakService.saveAfspraak(afspraak)) {
                 showAlert(Alert.AlertType.INFORMATION, "Afspraak succesvol opgeslagen!");
@@ -169,12 +172,20 @@ public class MedischAfspraakSysteem extends Application {
         TableColumn<Afspraak, LocalDate> colGeboortedatum = new TableColumn<>("Geboortedatum");
         colGeboortedatum.setCellValueFactory(new PropertyValueFactory<>("geboortedatum"));
 
-        afspraakTableView.getColumns().addAll(colBehandelingssoort, colVoornaam, colAchternaam, colAfspraakdatum, colAfspraaktijd, colArtsnaam, colNotitie, colEmail, colGeboortedatum);
+        TableColumn<Afspraak, Boolean> colBehandeling = new TableColumn<>("Behandeling");
+        colBehandeling.setCellValueFactory(afspraak -> {
+            boolean hasBehandeling = patientService.hasBehandeling(afspraak.getValue().getId());
+            return new SimpleBooleanProperty(hasBehandeling);
+        });
+        colBehandeling.setCellFactory(CheckBoxTableCell.forTableColumn(colBehandeling));
+
+
+        afspraakTableView.getColumns().addAll(colBehandelingssoort, colVoornaam, colAchternaam, colAfspraakdatum, colAfspraaktijd, colArtsnaam, colNotitie, colEmail, colGeboortedatum, colBehandeling);
 
         // Add CRUD buttons
         Button btnUpdate = new Button("Update");
         Button btnDelete = new Button("Delete");
-
+        Button btnAddBehandeling = new Button("Add Behandeling");
 
         btnUpdate.setOnAction(e -> {
             Afspraak selectedAfspraak = afspraakTableView.getSelectionModel().getSelectedItem();
@@ -199,7 +210,16 @@ public class MedischAfspraakSysteem extends Application {
             }
         });
 
-        content.getChildren().addAll(afspraakTableView, btnUpdate, btnDelete);
+        btnAddBehandeling.setOnAction(e -> {
+            Afspraak selectedAfspraak = afspraakTableView.getSelectionModel().getSelectedItem();
+            if (selectedAfspraak != null) {
+                new BehandelingScherm(patientService, selectedAfspraak, this).show();
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Selecteer een afspraak om een behandeling toe te voegen.");
+            }
+        });
+
+        content.getChildren().addAll(afspraakTableView, btnUpdate, btnDelete,btnAddBehandeling);
         return content;
     }
 
