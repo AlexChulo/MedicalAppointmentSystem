@@ -1,59 +1,21 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> f3f2d95101730990f29d31ebbe94551597b492c6
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/AlexChulo/MedicalAppointmentSystem">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">Medical Appointment System</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    Welkom bij mijn Medical Appointment System project!
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/AlexChulo/MedicalAppointmentSystem"><strong>Bekijk de documentatie »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
-
 
 
 <!-- TABLE OF CONTENTS -->
@@ -79,6 +41,8 @@
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#communicatiestrategie">Communicatiestrategie en Evaluatie</a></li>
+    <li><a href="#implementatie">Huidige Staat en Productieomgeving Implementatie</a></li>
   </ol>
 </details>
 
@@ -87,51 +51,24 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-<<<<<<< HEAD
-=======
-=======
-Contributors Forks Stargazers Issues MIT License LinkedIn
+<img src="images/screenshot.png" alt="Logo" width="80" height="80">
 
+Mijn Medical Appointment System biedt de volgende functionaliteiten:
 
-Logo
-Best-README-Template
-An awesome README template to jumpstart your projects!
-Explore the docs »
+- Registreren en inloggen voor gebruikers
+- Afspraken maken en beheren
+- CRUD-functionaliteit (Create, Read, Update, Delete) voor patiënten en afspraken
 
-View Demo · Report Bug · Request Feature
+Met dit systeem kunnen gebruikers eenvoudig hun medische afspraken beheren en up-to-date blijven met hun gezondheidsinformatie.
 
-Table of Contents
-About The Project
-Built With
-Getting Started
-Prerequisites
-Installation
-Usage
-Roadmap
-Contributing
-License
-Contact
-Acknowledgments
-About The Project
-Product Name Screen Shot
->>>>>>> 5f4bf93dc7e69297001b039e5fb26503450ec01d
->>>>>>> f3f2d95101730990f29d31ebbe94551597b492c6
+# Here's why:
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+1. **Efficiëntie**: Een digitaal afspraaksysteem kan de efficiëntie van een medische praktijk aanzienlijk verbeteren door het proces van het plannen en beheren van afspraken te stroomlijnen. Het vermindert de kans op dubbele boekingen, verkeerd ingeplande afspraken en handmatige fouten, waardoor de tijd van het personeel beter wordt benut.
 
-Here's why:
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> f3f2d95101730990f29d31ebbe94551597b492c6
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
+2. **Toegankelijkheid**: Met een online afspraaksysteem kunnen medewerkers afspraken efficiënt plannen en beheren, waardoor ze meer tijd hebben voor directe patiëntenzorg. Dit verbetert de toegankelijkheid van de zorg en verhoogt de efficiëntie van de medische praktijk.
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
+3. **Patiëntgerichtheid**: Hoewel patiënten geen afspraken maken, draagt een goed georganiseerd afspraaksysteem bij aan een positieve ervaring voor patiënten. Het stelt het personeel in staat om snel en nauwkeurig afspraken in te plannen, waardoor de wachttijden worden verkort en de patiënttevredenheid toeneemt.
 
-Use the `BLANK_README.md` to get started.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -139,272 +76,137 @@ Use the `BLANK_README.md` to get started.
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+[//]: # (Icons)
+[Java]: https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white
+[MySQL]: https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white
+[IntelliJ IDEA]: https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=for-the-badge&logo=intellij-idea&logoColor=white
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+[//]: # (URLs)
+[Java-url]: https://www.java.com/
+[MySQL-url]: https://www.mysql.com/
+[IntelliJ-url]: https://www.jetbrains.com/idea/
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+[//]: # (Badges)
+* [![Java][Java]][Java-url]
+* [![MySQL][MySQL]][MySQL-url]
+* [![IntelliJ IDEA][IntelliJ IDEA]][IntelliJ-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Installation Instructions
 
+Volg deze stappen om het project te installeren:
 
-<!-- USAGE EXAMPLES -->
-## Usage
+1. **Vereisten**
+    - Zorg ervoor dat je de volgende software geïnstalleerd hebt:
+        - [Java JDK](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) (versie 11 of hoger)
+        - [IntelliJ IDEA](https://www.jetbrains.com/idea/)
+        - [MySQL](https://dev.mysql.com/downloads/installer/)
+        - [XAMPP](https://www.apachefriends.org/index.html) (optioneel, voor een eenvoudige installatie van MySQL en PHPMyAdmin)
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+2. **Clone de repository**
+    ```sh
+    git clone https://github.com/AlexChulo/MedicalAppointmentSystem.git
+    cd MedicalAppointmentSystem
+    ```
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+3. **Installeer de MySQL-database**
+    - Als je XAMPP gebruikt, start MySQL via het XAMPP Control Panel.
+    - Open MySQL Workbench of een andere MySQL-client.
+    - Importeer de meegeleverde database dump `medical_appointment_system.sql` die je in de repository kunt vinden.
+    - Gebruik de volgende commando's om de database te importeren:
+      ```sql
+      SOURCE /path/to/your/repo/MedicalAppointmentSystem/database/medical_appointment_system.sql;
+      ```
+
+4. **Configureer de databaseverbinding**
+    - Open het project in IntelliJ IDEA.
+    - Ga naar het bestand `src/main/resources/database.properties` en zorg ervoor dat de database-instellingen correct zijn:
+      ```properties
+      db.url=jdbc:mysql://localhost:3306/medisch
+      db.user=root
+      db.password=yourpassword
+      ```
+
+5. **Build en run de applicatie**
+    - Gebruik IntelliJ IDEA om het project te bouwen en uit te voeren. Klik op 'Run' om de applicatie te starten.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Gebruiksgids
+
+**Volg deze stappen om het systeem te gebruiken:**
+
+### Registreren en inloggen
+
+1. Start de applicatie.
+2. Klik op 'Registreren' om een nieuw account aan te maken.
+3. Vul de vereiste gegevens in en klik op 'Registreren'.
+4. Log in met je nieuwe account.
+
+### Afspraken maken en beheren
+
+1. Na het inloggen, kom je meteen bij het 'Afspraken' gedeelte terecht.
+2. Vul de details in het formulier in en klik op 'Opslaan' om een nieuwe afspraak te maken.
+3. Beheer bestaande afspraken bij het gedeelte 'Agenda' en selecteer de afspraak om te kunnen 'Updaten' of 'Verwijderen.
+
+### Patiënten toevoegen en beheren
+
+1. Maak een 'Afspraak' of navigeer naar het 'Patiënten' gedeelte.
+2. Voeg nieuwe patiënten toe door op 'Add' te klikken en de details in te vullen.
+3. Beheer bestaande patiënten door op 'Update' of 'Delete' te klikken op de geselecteerde patiënt.
+
 
 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
+Hier is een tijdlijn voor de geplande functies en verbeteringen:
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
+- [x] Registratie functie (Q2 2024)
+- [x] Login Functie (Q2 2024)
+- [x] Afspraken creatie (Q2 2024)
+- [x] CRUD op gemaakte afspraken (Q2 2024)
+- [X] CRUD voor Patiënten (Q2 2024)
+- [ ] Behandeling dossier (Q2 2024)
+- [ ] CRUD voor Behandeling dossier (Q3 2024)
+- [ ] Zoekbalk voor Afspraken (Q3 2024)
+- [ ] Zoekbalk voor Patiënten (Q3 2024)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+## Communicatiestrategie en Evaluatie
 
-<!-- CONTRIBUTING -->
-## Contributing
+Voor de implementatie van dit systeem is een communicatiestrategie opgesteld om ervoor te zorgen dat alle stakeholders op de hoogte zijn van de voortgang en eventuele problemen:
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+1. **Wekelijkse Updates**: Wekelijkse vergaderingen met het team om de voortgang te bespreken en eventuele problemen op te lossen.
+2. **Stakeholder Communicatie**: Maandelijkse updates naar stakeholders om hen op de hoogte te houden van de projectstatus.
+3. **Feedback Cyclus**: Regelmatige feedbacksessies met gebruikers om hun ervaringen en suggesties te verzamelen.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+De uiteindelijke situatie wordt geëvalueerd en geverifieerd door:
+- **Gebruikersonderzoeken**: Uitvoeren van enquêtes onder gebruikers om de effectiviteit en gebruiksvriendelijkheid van het systeem te beoordelen.
+- **Systeemmonitoring**: Continue monitoring van het systeem om prestaties en betrouwbaarheid te waarborgen.
+- **Testen**: Uitvoeren van uitgebreide tests om ervoor te zorgen dat alle functionaliteiten correct werken voordat nieuwe updates worden uitgerold.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Huidige Staat en Productieomgeving Implementatie
 
+Het huidige systeem is volledig operationeel voor het beheren van medische afspraken en patiënteninformatie. Om dit systeem in een productieomgeving te implementeren, volg de onderstaande stappen:
 
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+1. Zorg ervoor dat alle vereisten (JavaFX, MySQL, IntelliJ IDEA) zijn geïnstalleerd.
+2. Clone de repository en configureer de database zoals beschreven in de installatie-instructies.
+3. Deploy de applicatie op een productie server, zorg ervoor dat de server toegang heeft tot de MySQL-database.
+4. Configureer de server om de applicatie automatisch te starten en draai periodieke back-ups van de database.
 
 
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Alex Chu - (al.chu@ad-academie.nl)
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
+Project Link: [https://github.com/AlexChulo/MedicalAppointmentSystem](https://github.com/AlexChulo/MedicalAppointmentSystem)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
-<<<<<<< HEAD
-=======
-=======
-
-Your time should be focused on creating something amazing. A project that solves a problem and helps others
-You shouldn't be doing the same tasks over and over like creating a README from scratch
-You should implement DRY principles to the rest of your life 😄
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the BLANK_README.md to get started.
-
-(back to top)
-
-Built With
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-Next
-React
-Vue
-Angular
-Svelte
-Laravel
-Bootstrap
-JQuery
-(back to top)
-
-Getting Started
-This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.
-
-Prerequisites
-This is an example of how to list things you need to use the software and how to install them.
-
-npm
-npm install npm@latest -g
-Installation
-Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services.
-
-Get a free API Key at https://example.com
-Clone the repo
-git clone https://github.com/your_username_/Project-Name.git
-Install NPM packages
-npm install
-Enter your API in config.js
-const API_KEY = 'ENTER YOUR API';
-(back to top)
-
-Usage
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-For more examples, please refer to the Documentation
-
-(back to top)
-
-Roadmap
- Add Changelog
- Add back to top links
- Add Additional Templates w/ Examples
- Add "components" document to easily copy & paste sections of the readme
- Multi-language Support
- Chinese
- Spanish
-See the open issues for a full list of proposed features (and known issues).
-
-(back to top)
-
-Contributing
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement". Don't forget to give the project a star! Thanks again!
-
-Fork the Project
-Create your Feature Branch (git checkout -b feature/AmazingFeature)
-Commit your Changes (git commit -m 'Add some AmazingFeature')
-Push to the Branch (git push origin feature/AmazingFeature)
-Open a Pull Request
-(back to top)
-
-License
-Distributed under the MIT License. See LICENSE.txt for more information.
-
-(back to top)
-
-Contact
-Your Name - @your_twitter - email@example.com
-
-Project Link: https://github.com/your_username/repo_name
-
-(back to top)
-
-Acknowledgments
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-Choose an Open Source License
-GitHub Emoji Cheat Sheet
-Malven's Flexbox Cheatsheet
-Malven's Grid Cheatsheet
-Img Shields
-GitHub Pages
-Font Awesome
-React Icons
-(back to top)
->>>>>>> 5f4bf93dc7e69297001b039e5fb26503450ec01d
->>>>>>> f3f2d95101730990f29d31ebbe94551597b492c6
