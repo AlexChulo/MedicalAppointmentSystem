@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c9442acc-6927-45b1-877c-f3e045d09bf9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/UpdatePatientScherm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/Afspraak.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/Afspraak.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/AfspraakService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/AfspraakService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/MedischAfspraakSysteem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/MedischAfspraakSysteem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/Patient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/UpdateAfspraakScherm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/medicalappointmentsystem/UpdateAfspraakScherm.java" afterDir="false" />
-    </list>
+    <list default="true" id="c9442acc-6927-45b1-877c-f3e045d09bf9" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -100,7 +92,7 @@
       <workItem from="1716929714352" duration="1711000" />
       <workItem from="1716931840298" duration="435000" />
       <workItem from="1716989582847" duration="5857000" />
-      <workItem from="1716999533475" duration="49000" />
+      <workItem from="1716999533475" duration="269000" />
     </task>
     <servers />
   </component>

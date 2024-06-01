@@ -38,7 +38,7 @@ public class AfspraakService {
         }
     }
 
-    private boolean saveOrUpdatePatient(String voornaam, String achternaam, String email, LocalDate geboortedatum) {
+    public boolean saveOrUpdatePatient(String voornaam, String achternaam, String email, LocalDate geboortedatum) {
         String query = "SELECT COUNT(*) FROM patienten WHERE voornaam = ? AND achternaam = ?";
         try (Connection conn = databaseConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {

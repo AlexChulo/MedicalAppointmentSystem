@@ -10,12 +10,14 @@ public class Patient {
     private LocalDate geboortedatum;
 
     public Patient(Integer id, String voornaam, String achternaam, String email, LocalDate geboortedatum) {
+        this.id = id;
         this.voornaam = voornaam;
         this.achternaam = achternaam;
         this.email = email;
         this.geboortedatum = geboortedatum;
     }
 
+    // Getters en setters
     public Integer getId() {
         return id;
     }
@@ -23,6 +25,7 @@ public class Patient {
     public void setId(Integer id) {
         this.id = id;
     }
+
     public String getVoornaam() {
         return voornaam;
     }
@@ -55,3 +58,4 @@ public class Patient {
         this.geboortedatum = geboortedatum;
     }
 }
+

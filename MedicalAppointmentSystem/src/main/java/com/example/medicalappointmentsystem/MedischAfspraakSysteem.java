@@ -8,12 +8,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
 
 public class MedischAfspraakSysteem extends Application {
+    private PatientService patientService;
+    private TableView<Patient> patientTabel;
     private UserService userService = new UserService();
     private AfspraakService afspraakService = new AfspraakService();
     private Stage primaryStage;
@@ -24,6 +27,8 @@ public class MedischAfspraakSysteem extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         new LoginScherm(userService, primaryStage, this).show();
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        patientService = new PatientService(databaseConnector, new AfspraakService());
     }
 
     public void showMainApp() {
@@ -198,13 +203,17 @@ public class MedischAfspraakSysteem extends Application {
         return content;
     }
 
+    public void updatePatienten() {
+        patientTabel.setItems(patientService.getAllPatienten());
+    }
+
     private VBox createPatientenContent() {
         VBox content = new VBox();
         content.setPadding(new Insets(20));
         content.setSpacing(10);
 
-        TableView<Patient> tabel = new TableView<>();
-        tabel.setItems(afspraakService.getAllPatienten());
+        patientTabel = new TableView<>();
+        patientTabel.setItems(patientService.getAllPatienten());
 
         TableColumn<Patient, String> colVoornaam = new TableColumn<>("Voornaam");
         colVoornaam.setCellValueFactory(new PropertyValueFactory<>("voornaam"));
@@ -218,9 +227,39 @@ public class MedischAfspraakSysteem extends Application {
         TableColumn<Patient, LocalDate> colGeboortedatum = new TableColumn<>("Geboortedatum");
         colGeboortedatum.setCellValueFactory(new PropertyValueFactory<>("geboortedatum"));
 
-        tabel.getColumns().addAll(colVoornaam, colAchternaam, colEmail, colGeboortedatum);
+        patientTabel.getColumns().addAll(colVoornaam, colAchternaam, colEmail, colGeboortedatum);
 
-        content.getChildren().add(tabel);
+        Button btnAdd = new Button("Add");
+        btnAdd.setOnAction(e -> new UpdatePatientScherm(patientService, null, this).show());
+
+        Button btnUpdate = new Button("Update");
+        btnUpdate.setOnAction(e -> {
+            Patient selectedPatient = patientTabel.getSelectionModel().getSelectedItem();
+            if (selectedPatient != null) {
+                new UpdatePatientScherm(patientService, selectedPatient, this).show();
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Selecteer een patiënt om te updaten.");
+            }
+        });
+
+        Button btnDelete = new Button("Delete");
+        btnDelete.setOnAction(e -> {
+            Patient selectedPatient = patientTabel.getSelectionModel().getSelectedItem();
+            if (selectedPatient != null) {
+                if (patientService.deletePatient(selectedPatient.getId())) {
+                    showAlert(Alert.AlertType.INFORMATION, "Patiënt succesvol verwijderd!");
+                    updatePatienten();
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Verwijderen van patiënt mislukt!");
+                }
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Selecteer een patiënt om te verwijderen.");
+            }
+        });
+
+        HBox buttons = new HBox(10, btnAdd, btnUpdate, btnDelete);
+
+        content.getChildren().addAll(patientTabel, buttons);
         return content;
     }
 
