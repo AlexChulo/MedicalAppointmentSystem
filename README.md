@@ -51,7 +51,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="images/screenshot.png" alt="Logo" width="80" height="80">
+<img src="images/screenshot.png">
 
 Mijn Medical Appointment System biedt de volgende functionaliteiten:
 
