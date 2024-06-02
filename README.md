@@ -37,12 +37,10 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
     <li><a href="#communicatiestrategie">Communicatiestrategie en Evaluatie</a></li>
     <li><a href="#implementatie">Huidige Staat en Productieomgeving Implementatie</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
@@ -169,7 +167,7 @@ Hier is een tijdlijn voor de geplande functies en verbeteringen:
 - [x] Afspraken creatie (Q2 2024)
 - [x] CRUD op gemaakte afspraken (Q2 2024)
 - [X] CRUD voor Patiënten (Q2 2024)
-- [ ] Behandeling dossier (Q2 2024)
+- [X] Behandeling dossier (Q2 2024)
 - [ ] CRUD voor Behandeling dossier (Q3 2024)
 - [ ] Zoekbalk voor Afspraken (Q3 2024)
 - [ ] Zoekbalk voor Patiënten (Q3 2024)
