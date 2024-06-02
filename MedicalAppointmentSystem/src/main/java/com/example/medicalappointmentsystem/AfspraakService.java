@@ -7,18 +7,26 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.logging.Logger;
 
+// AfspraakService is verantwoordelijk voor het afhandelen van operaties met betrekking tot afspraken
 public class AfspraakService {
+    // Logger instantie voor het loggen van gebeurtenissen
     private static final Logger logger = Logger.getLogger(AfspraakService.class.getName());
+
+    // Database connector instantie voor het maken van verbindingen
     private DatabaseConnector databaseConnector = new DatabaseConnector();
 
+    // Slaat een afspraak op en retourneert true als succesvol, anders false
     public boolean saveAfspraak(Afspraak afspraak) {
+        // Zorg ervoor dat de patiënt bestaat of wordt opgeslagen voordat de afspraak wordt opgeslagen
         if (!saveOrUpdatePatient(afspraak.getVoornaam(), afspraak.getAchternaam(), afspraak.getEmail(), afspraak.getGeboortedatum())) {
             return false;
         }
 
+        // SQL query om een nieuwe afspraak in de database in te voegen
         String query = "INSERT INTO afspraken (behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie, email, geboortedatum) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = databaseConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
+            // Stel parameters in voor de prepared statement
             pstmt.setString(1, afspraak.getBehandelingssoort());
             pstmt.setString(2, afspraak.getVoornaam());
             pstmt.setString(3, afspraak.getAchternaam());
@@ -29,6 +37,7 @@ public class AfspraakService {
             pstmt.setString(8, afspraak.getEmail());
             pstmt.setDate(9, Date.valueOf(afspraak.getGeboortedatum()));
 
+            // Voer de update uit
             pstmt.executeUpdate();
             logger.info("Afspraak succesvol opgeslagen: " + afspraak);
             return true;
@@ -38,7 +47,9 @@ public class AfspraakService {
         }
     }
 
+    // Slaat patiëntinformatie op of werkt deze bij en retourneert true als succesvol, anders false
     public boolean saveOrUpdatePatient(String voornaam, String achternaam, String email, LocalDate geboortedatum) {
+        // SQL query om te controleren of de patiënt al bestaat
         String query = "SELECT COUNT(*) FROM patienten WHERE voornaam = ? AND achternaam = ?";
         try (Connection conn = databaseConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -46,11 +57,12 @@ public class AfspraakService {
             pstmt.setString(2, achternaam);
 
             ResultSet rs = pstmt.executeQuery();
+            // Als de patiënt bestaat, retourneer true
             if (rs.next() && rs.getInt(1) > 0) {
                 return true; // Patiënt bestaat al
             }
 
-            // Voeg patiënt toe
+            // SQL query om een nieuwe patiënt in de database in te voegen
             String insertQuery = "INSERT INTO patienten (voornaam, achternaam, email, geboortedatum) VALUES (?, ?, ?, ?)";
             try (PreparedStatement insertPstmt = conn.prepareStatement(insertQuery)) {
                 insertPstmt.setString(1, voornaam);
@@ -66,12 +78,14 @@ public class AfspraakService {
         }
     }
 
+    // Haalt een lijst van alle patiënten uit de database
     public ObservableList<Patient> getAllPatienten() {
         ObservableList<Patient> patienten = FXCollections.observableArrayList();
         String query = "SELECT * FROM patienten";
         try (Connection conn = databaseConnector.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
+            // Loop door de result set en voeg elke patiënt toe aan de lijst
             while (rs.next()) {
                 Patient patient = new Patient(
                         rs.getInt("id"),
@@ -88,12 +102,14 @@ public class AfspraakService {
         return patienten;
     }
 
+    // Werkt een bestaande afspraak bij en retourneert true als succesvol, anders false
     public boolean updateAfspraak(Afspraak oldAfspraak, Afspraak newAfspraak) {
+        // SQL query om een afspraak in de database bij te werken
         String query = "UPDATE afspraken SET behandelingssoort = ?, voornaam = ?, achternaam = ?, afspraakdatum = ?, afspraaktijd = ?, artsnaam = ?, notitie = ?, email = ?, geboortedatum = ? WHERE behandelingssoort = ? AND voornaam = ? AND achternaam = ? AND afspraakdatum = ? AND afspraaktijd = ? AND artsnaam = ? AND notitie = ?";
 
         try (Connection conn = databaseConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
-
+            // Stel parameters in voor de prepared statement
             pstmt.setString(1, newAfspraak.getBehandelingssoort());
             pstmt.setString(2, newAfspraak.getVoornaam());
             pstmt.setString(3, newAfspraak.getAchternaam());
@@ -112,12 +128,14 @@ public class AfspraakService {
         }
     }
 
+    // Verwijdert een afspraak en retourneert true als succesvol, anders false
     public boolean deleteAfspraak(Afspraak afspraak) {
+        // SQL query om een afspraak uit de database te verwijderen
         String query = "DELETE FROM afspraken WHERE behandelingssoort = ? AND voornaam = ? AND achternaam = ? AND afspraakdatum = ? AND afspraaktijd = ? AND artsnaam = ? AND notitie = ?";
 
         try (Connection conn = databaseConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
-
+            // Stel parameters in voor de prepared statement
             pstmt.setString(1, afspraak.getBehandelingssoort());
             pstmt.setString(2, afspraak.getVoornaam());
             pstmt.setString(3, afspraak.getAchternaam());
@@ -134,6 +152,7 @@ public class AfspraakService {
         }
     }
 
+    // Haalt een lijst van alle afspraken uit de database
     public ObservableList<Afspraak> getAllAfspraken() {
         ObservableList<Afspraak> afspraken = FXCollections.observableArrayList();
         String query = "SELECT * FROM afspraken";
@@ -141,7 +160,7 @@ public class AfspraakService {
         try (Connection conn = databaseConnector.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
-
+            // Loop door de result set en voeg elke afspraak toe aan de lijst
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String behandelingssoort = rs.getString("behandelingssoort");

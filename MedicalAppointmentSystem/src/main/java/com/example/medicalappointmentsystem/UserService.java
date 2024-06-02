@@ -10,8 +10,9 @@ import java.util.List;
 public class UserService {
     private DatabaseConnector databaseConnector = new DatabaseConnector();
 
+    // Methode om een nieuwe gebruiker te registreren
     public boolean registerUser(String voornaam, String achternaam, String username, String password, String role) {
-        try (Connection conn = databaseConnector .getConnection()) {
+        try (Connection conn = databaseConnector.getConnection()) {
             String query = "INSERT INTO users (voornaam, achternaam, username, password, role) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, voornaam);
@@ -27,6 +28,7 @@ public class UserService {
         }
     }
 
+    // Methode om een gebruiker te authenticeren op basis van gebruikersnaam en wachtwoord
     public boolean authenticateUser(String username, String password) {
         try (Connection conn = databaseConnector.getConnection()) {
             String query = "SELECT * FROM users WHERE username = ? AND password = ?";
@@ -41,9 +43,10 @@ public class UserService {
         }
     }
 
+    // Methode om alle namen van artsen op te halen
     public List<String> getAllArtsNames() {
         List<String> artsNames = new ArrayList<>();
-        try (Connection conn = databaseConnector .getConnection()) {
+        try (Connection conn = databaseConnector.getConnection()) {
             String query = "SELECT voornaam, achternaam FROM users WHERE role = 'Arts'";
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
@@ -56,8 +59,9 @@ public class UserService {
         return artsNames;
     }
 
+    // Methode om het aantal gebruikers per rol op te halen
     public int countUsersByRole(String role) {
-        try (Connection conn = databaseConnector .getConnection()) {
+        try (Connection conn = databaseConnector.getConnection()) {
             String query = "SELECT COUNT(*) AS count FROM users WHERE role = ?";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, role);
@@ -71,8 +75,3 @@ public class UserService {
         return 0;
     }
 }
-
-
-
-
-

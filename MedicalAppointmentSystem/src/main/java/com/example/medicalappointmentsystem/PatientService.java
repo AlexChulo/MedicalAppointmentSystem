@@ -10,11 +10,13 @@ public class PatientService {
     private DatabaseConnector databaseConnector;
     private AfspraakService afspraakService;
 
+    // Constructor om een PatientService object te initialiseren met een DatabaseConnector en een AfspraakService
     public PatientService(DatabaseConnector databaseConnector, AfspraakService afspraakService) {
         this.databaseConnector = databaseConnector;
         this.afspraakService = afspraakService;
     }
 
+    // Haalt alle patiënten op uit de database en retourneert ze als een ObservableList
     public ObservableList<Patient> getAllPatienten() {
         ObservableList<Patient> patients = FXCollections.observableArrayList();
         String query = "SELECT * FROM patienten";
@@ -23,6 +25,7 @@ public class PatientService {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
+            // Itereer door de resultaten en maak patiëntobjecten op basis van de opgehaalde gegevens
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String voornaam = rs.getString("voornaam");
@@ -40,6 +43,7 @@ public class PatientService {
         return patients;
     }
 
+    // Voegt een nieuwe patiënt toe aan de database
     public boolean addPatient(Patient patient) {
         String query = "INSERT INTO patienten (voornaam, achternaam, geboortedatum, email) VALUES (?, ?, ?, ?)";
 
@@ -59,6 +63,7 @@ public class PatientService {
         }
     }
 
+    // Werkt een bestaande patiënt bij in de database
     public boolean updatePatient(Patient patient) {
         if (patient.getId() == null) {
             System.out.println("Patient ID is null for patient: " + patient);
@@ -84,6 +89,7 @@ public class PatientService {
         }
     }
 
+    // Verwijdert een patiënt uit de database op basis van de opgegeven patiënt-ID
     public boolean deletePatient(int id) {
         String query = "DELETE FROM patienten WHERE id = ?";
 
@@ -99,6 +105,7 @@ public class PatientService {
         }
     }
 
+    // Voegt een behandeling toe voor een specifieke patiënt
     public boolean addBehandeling(int patientId, String behandelingNotitie) {
         String query = "INSERT INTO behandelingen (afspraak_id, behandeling_notitie) VALUES (?, ?)";
 
@@ -116,6 +123,7 @@ public class PatientService {
         }
     }
 
+    // Controleert of een patiënt al behandelingen heeft
     public boolean hasBehandeling(int patientId) {
         String query = "SELECT COUNT(*) FROM behandelingen WHERE afspraak_id = ?";
 
@@ -134,7 +142,7 @@ public class PatientService {
         return false;
     }
 
-
+    // Roep de methode saveOrUpdatePatient van de afspraakService aan om een patiënt op te slaan of bij te werken
     public boolean saveOrUpdatePatient(String voornaam, String achternaam, String email, LocalDate geboortedatum) {
         return afspraakService.saveOrUpdatePatient(voornaam, achternaam, email, geboortedatum);
     }

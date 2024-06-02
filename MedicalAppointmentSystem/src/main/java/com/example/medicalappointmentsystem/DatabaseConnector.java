@@ -7,6 +7,7 @@ import java.sql.SQLException;
 public class DatabaseConnector {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/medisch";
     private static final String DB_USER = "root";
+//    Password naar eigen password veranderen
     private static final String DB_PASSWORD = "root";
 
     public static Connection getConnection() throws SQLException {

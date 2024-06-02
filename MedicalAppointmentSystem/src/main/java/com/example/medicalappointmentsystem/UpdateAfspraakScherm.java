@@ -13,19 +13,23 @@ public class UpdateAfspraakScherm {
     private Afspraak afspraak;
     private MedischAfspraakSysteem app;
 
+    // Constructor om een UpdateAfspraakScherm object te initialiseren met een AfspraakService, een afspraak en een MedischAfspraakSysteem
     public UpdateAfspraakScherm(AfspraakService afspraakService, Afspraak afspraak, MedischAfspraakSysteem app) {
         this.afspraakService = afspraakService;
         this.afspraak = afspraak;
         this.app = app;
     }
 
+    // Methode om het scherm voor het bijwerken van de afspraak te tonen
     public void show() {
         Stage stage = new Stage();
 
+        // Maak een VBox lay-out voor de elementen van het scherm
         VBox root = new VBox();
         root.setPadding(new Insets(20));
         root.setSpacing(10);
 
+        // Labels en invoervelden voor de afspraakgegevens
         Label lblBehandelingssoort = new Label("Behandelingssoort:");
         ComboBox<String> cbBehandelingssoort = new ComboBox<>();
         cbBehandelingssoort.getItems().addAll("Consultatie", "Follow-up", "Routinecontrole");
@@ -60,8 +64,10 @@ public class UpdateAfspraakScherm {
         TextArea taNotitie = new TextArea(afspraak.getNotitie());
         taNotitie.setPrefRowCount(5);
 
+        // Knop om de afspraak bij te werken
         Button btnSubmit = new Button("Update");
         btnSubmit.setOnAction(e -> {
+            // Haal de ingevoerde gegevens op
             int id = afspraak.getId();
             String behandelingssoort = cbBehandelingssoort.getValue();
             String voornaam = tfVoornaam.getText();
@@ -73,8 +79,10 @@ public class UpdateAfspraakScherm {
             String artsnaam = cbArtsnaam.getValue();
             String notitie = taNotitie.getText();
 
-            Afspraak updatedAfspraak = new Afspraak(id,behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie, email, geboortedatum);
+            // Maak een bijgewerkte afspraak en roep de updateAfspraak methode aan van de afspraakService
+            Afspraak updatedAfspraak = new Afspraak(id, behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie, email, geboortedatum);
             if (afspraakService.updateAfspraak(afspraak, updatedAfspraak)) {
+                // Vernieuw de agenda en sluit het scherm
                 app.updateAgenda();
                 stage.close();
                 app.showAlert(Alert.AlertType.INFORMATION, "Afspraak succesvol geüpdatet!");
@@ -83,8 +91,10 @@ public class UpdateAfspraakScherm {
             }
         });
 
+        // Voeg alle elementen toe aan de root VBox
         root.getChildren().addAll(lblBehandelingssoort, cbBehandelingssoort, lblVoornaam, tfVoornaam, lblAchternaam, tfAchternaam, lblEmail, tfEmail, lblGeboortedatum, dpGeboortedatum, lblAfspraakdatum, dpAfspraakdatum, lblAfspraaktijd, cbAfspraaktijd, lblArtsnaam, cbArtsnaam, lblNotitie, taNotitie, btnSubmit);
 
+        // Maak een scene en toon het scherm op het stage
         Scene scene = new Scene(root, 400, 600);
         stage.setTitle("Update Afspraak");
         stage.setScene(scene);

@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 
 public class MedischAfspraakSysteem extends Application {
+    // Services
     private PatientService patientService;
     private TableView<Patient> patientTabel;
     private UserService userService = new UserService();
@@ -28,40 +29,51 @@ public class MedischAfspraakSysteem extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        // Toon het inlogscherm
         new LoginScherm(userService, primaryStage, this).show();
+        // Maak een verbinding met de database
         DatabaseConnector databaseConnector = new DatabaseConnector();
+        // Initialiseer de patiëntenservice
         patientService = new PatientService(databaseConnector, new AfspraakService());
     }
 
     public void showMainApp() {
+        // Het hoofdvenster van de applicatie
         BorderPane root = new BorderPane();
 
+        // Zijbalk met knoppen
         VBox sidebar = new VBox();
         sidebar.setStyle("-fx-background-color: #FF0000;");
         sidebar.setPrefWidth(200);
         sidebar.setSpacing(20);
         sidebar.setPadding(new Insets(20, 10, 20, 10));
 
+        // Knoppen voor verschillende secties
         Button btnAfspraak = new Button("Afspraak");
         Button btnPatienten = new Button("Patienten");
         Button btnAgenda = new Button("Agenda");
         Button btnDashboard = new Button("Dashboard");
 
+        // Voeg knoppen toe aan de zijbalk
         sidebar.getChildren().addAll(btnAfspraak, btnPatienten, btnAgenda, btnDashboard);
 
+        // Inhoud voor verschillende secties
         VBox contentAfspraak = createAfspraakContent();
         VBox contentPatienten = createPatientenContent();
         VBox contentAgenda = createAgendaContent();
         VBox contentDashboard = createDashboardContent();
 
+        // Plaats de inhoud van het huidige scherm in het centrale gedeelte van de applicatie
         root.setLeft(sidebar);
         root.setCenter(contentAfspraak);
 
+        // Schakel tussen schermen wanneer er op een knop wordt geklikt
         btnAfspraak.setOnAction(e -> root.setCenter(contentAfspraak));
         btnPatienten.setOnAction(e -> root.setCenter(contentPatienten));
         btnAgenda.setOnAction(e -> root.setCenter(contentAgenda));
         btnDashboard.setOnAction(e -> root.setCenter(contentDashboard));
 
+        // Creëer de hoofdscene
         Scene scene = new Scene(root, 1200, 800);
         primaryStage.setTitle("Medisch Afspraak Systeem");
         primaryStage.setScene(scene);
@@ -69,10 +81,12 @@ public class MedischAfspraakSysteem extends Application {
     }
 
     private VBox createAfspraakContent() {
+        // Inhoud voor het afspraakgedeelte
         VBox content = new VBox();
         content.setPadding(new Insets(20));
         content.setSpacing(10);
 
+        // Labels en invoervelden voor afspraakgegevens
         Label lblBehandelingssoort = new Label("Behandelingssoort:");
         ComboBox<String> cbBehandelingssoort = new ComboBox<>();
         cbBehandelingssoort.getItems().addAll("Consultatie", "Follow-up", "Routinecontrole");
@@ -106,6 +120,7 @@ public class MedischAfspraakSysteem extends Application {
 
         Button btnSubmit = new Button("Opslaan");
         btnSubmit.setOnAction(e -> {
+            // Logica voor het opslaan van de afspraak
             int id = 0;
             String behandelingssoort = cbBehandelingssoort.getValue();
             String voornaam = tfVoornaam.getText();
@@ -119,6 +134,7 @@ public class MedischAfspraakSysteem extends Application {
 
             Afspraak afspraak = new Afspraak(id,behandelingssoort, voornaam, achternaam, afspraakdatum, afspraaktijd, artsnaam, notitie, email, geboortedatum);
 
+            // Opslaan van de afspraak en bijwerken van de agenda
             if (afspraakService.saveAfspraak(afspraak)) {
                 showAlert(Alert.AlertType.INFORMATION, "Afspraak succesvol opgeslagen!");
                 clearAfspraakFields(cbBehandelingssoort, tfVoornaam, tfAchternaam, tfEmail, dpGeboortedatum, dpAfspraakdatum, cbAfspraaktijd, cbArtsnaam, taNotitie);
@@ -127,16 +143,17 @@ public class MedischAfspraakSysteem extends Application {
                 showAlert(Alert.AlertType.ERROR, "Opslaan van afspraak mislukt!");
             }
         });
-
+        // Voeg alle elementen toe aan de inhoud
         content.getChildren().addAll(lblBehandelingssoort, cbBehandelingssoort, lblVoornaam, tfVoornaam, lblAchternaam, tfAchternaam, lblEmail, tfEmail, lblGeboortedatum, dpGeboortedatum, lblAfspraakdatum, dpAfspraakdatum, lblAfspraaktijd, cbAfspraaktijd, lblArtsnaam, cbArtsnaam, lblNotitie, taNotitie, btnSubmit);
         return content;
     }
 
+    //    Voeg arts namen toe aan de ComboBox
     public void loadArtsNames(ComboBox<String> cbArtsnaam) {
         ObservableList<String> artsNames = FXCollections.observableArrayList(userService.getAllArtsNames());
         cbArtsnaam.setItems(artsNames);
     }
-
+    //    Afspraak content
     private VBox createAgendaContent() {
         VBox content = new VBox();
         content.setPadding(new Insets(20));
